@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="https://cdn.socket.io/3.0.1/socket.io.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		localStorage.debug = 'socket.io-client:socket';
+
+		const socket = io("http://localhost:8081", {
+			auth: { token: "this-is-my-token" },
+			transports: ["websocket"],
+		});
+		
+		socket.on("message", (data) => {
+			console.log(`Message received: ${data}`);
+		});
+	
+		socket.on("connect", () => {
+		  console.log("Socket connected");
+		});
+
+		socket.on('disconnect', function(reason){
+		   console.log('Socket disconnected: ' + reason);
+		});
+	</script>
+</body>
+</html>

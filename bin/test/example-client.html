@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="https://cdn.socket.io/3.0.1/socket.io.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		localStorage.debug = 'socket.io-client:socket';
+
+		const listener = (eventName, ...args) => {
+		  console.log(eventName, args);
+		}
+
+		const socket = io("http://localhost:8081", {
+			//auth: { token: "my-token" },
+			transports: ["websocket"],
+			//withCredentials: true
+			
+		});
+		
+		socket.onAny(listener);
+	
+		socket.on("connect", () => {
+		  console.log("Socket connected"); // true
+		});
+
+		socket.on('disconnect', function(reason){
+		   console.log('Socket disconnected because: ' + reason);
+		});
+	</script>
+</body>
+</html>
